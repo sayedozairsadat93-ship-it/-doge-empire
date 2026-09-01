@@ -1,0 +1,2198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Doge Empire</title>
+
+<!-- Telegram Mini App -->
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+    font-family:Arial,Helvetica,sans-serif;
+    background:#071015;
+    color:white;
+}
+
+body{
+    overflow-x:hidden;
+}
+
+button{
+    border:0;
+    outline:0;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+}
+
+.app{
+    min-height:100vh;
+    padding-bottom:100px;
+
+    background:
+      radial-gradient(circle at 20% 15%,rgba(0,190,255,.16),transparent 30%),
+      radial-gradient(circle at 90% 30%,rgba(150,60,255,.16),transparent 35%),
+      linear-gradient(145deg,#061016,#11131d 55%,#080b12);
+}
+
+
+/* =========================
+   TOP
+========================= */
+
+.top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 18px 8px;
+}
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:#171d27;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+    border:2px solid rgba(255,255,255,.2);
+}
+
+.avatar img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.username{
+    font-size:18px;
+    font-weight:800;
+}
+
+.level{
+    margin-top:4px;
+    font-size:13px;
+    color:#9aa7b4;
+}
+
+.menu{
+    width:45px;
+    height:45px;
+    border-radius:15px;
+    background:#252c38;
+    font-size:25px;
+}
+
+
+/* =========================
+   PROFIT
+========================= */
+
+.profit{
+    margin:8px 18px 14px;
+
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    background:rgba(35,40,52,.75);
+    border-radius:20px;
+
+    padding:14px 18px;
+}
+
+.profit small{
+    color:#8f9ba9;
+}
+
+.profit strong{
+    color:#36b8ff;
+    font-size:17px;
+}
+
+
+/* =========================
+   BALANCE
+========================= */
+
+.balance{
+    text-align:center;
+    margin-top:12px;
+}
+
+.balance-title{
+    color:#a7b2bf;
+    font-size:14px;
+}
+
+.coins{
+    font-size:46px;
+    font-weight:900;
+    margin-top:3px;
+}
+
+.coin{
+    display:inline-flex;
+
+    width:32px;
+    height:32px;
+
+    border-radius:50%;
+
+    align-items:center;
+    justify-content:center;
+
+    background:linear-gradient(145deg,#f9f06b,#7bd22e);
+
+    color:#273d14;
+    font-size:19px;
+
+    box-shadow:0 0 15px rgba(176,240,70,.35);
+}
+
+
+/* =========================
+   BANNER
+========================= */
+
+.banner{
+    margin:16px 15px;
+    height:105px;
+
+    border-radius:18px;
+    overflow:hidden;
+
+    position:relative;
+
+    background:linear-gradient(135deg,#ff5b55,#833eff);
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    text-align:center;
+}
+
+.banner h2{
+    margin:0;
+    font-size:28px;
+    font-weight:900;
+
+    text-shadow:2px 3px 0 rgba(0,0,0,.35);
+}
+
+.banner p{
+    margin:5px 0 0;
+    font-size:12px;
+    opacity:.9;
+}
+
+
+/* =========================
+   CHARACTER
+========================= */
+
+.character-area{
+    text-align:center;
+    margin-top:8px;
+}
+
+.doge{
+    width:245px;
+    height:245px;
+
+    margin:auto;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    user-select:none;
+
+    filter:drop-shadow(0 15px 22px rgba(0,0,0,.45));
+
+    transition:transform .1s;
+}
+
+.doge img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+}
+
+.doge-placeholder{
+    width:180px;
+    height:210px;
+
+    border-radius:80px 80px 45px 45px;
+
+    background:linear-gradient(#252b39,#080b12);
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:100px;
+
+    border:3px solid #293142;
+}
+
+
+/* =========================
+   ENERGY
+========================= */
+
+.energy{
+    width:85%;
+    max-width:350px;
+
+    margin:0 auto 15px;
+}
+
+.energy-head{
+    display:flex;
+    justify-content:space-between;
+
+    color:#c8d0d9;
+
+    font-size:14px;
+
+    margin-bottom:6px;
+}
+
+.energy-bar{
+    height:10px;
+
+    background:#262d39;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.energy-fill{
+    height:100%;
+
+    background:linear-gradient(90deg,#ffd629,#ff8a00);
+
+    width:100%;
+
+    transition:.2s;
+}
+
+
+/* =========================
+   TAP
+========================= */
+
+.tap-button{
+    display:block;
+
+    margin:10px auto 20px;
+
+    width:170px;
+    height:55px;
+
+    border-radius:18px;
+
+    background:linear-gradient(135deg,#8e54ff,#3ca9ff);
+
+    font-size:17px;
+
+    box-shadow:0 10px 30px rgba(71,118,255,.25);
+}
+
+.tap-button:active{
+    transform:scale(.94);
+}
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+.actions{
+    display:grid;
+
+    grid-template-columns:1fr 1fr;
+
+    gap:12px;
+
+    padding:0 15px;
+}
+
+.action{
+    background:#1c222d;
+
+    border-radius:18px;
+
+    padding:15px;
+
+    text-align:center;
+
+    font-size:15px;
+}
+
+.action .emoji{
+    display:block;
+
+    font-size:30px;
+
+    margin-bottom:5px;
+}
+
+
+/* =========================
+   PAGE
+========================= */
+
+.page{
+    display:none;
+
+    padding:12px 15px;
+}
+
+.page.active{
+    display:block;
+}
+
+.page-title{
+    font-size:30px;
+    font-weight:900;
+
+    margin:10px 0 6px;
+}
+
+.page-sub{
+    color:#9ba7b5;
+
+    line-height:1.5;
+
+    margin-bottom:20px;
+}
+
+
+/* =========================
+   QUEST
+========================= */
+
+.quest{
+    background:#1b2029;
+
+    border-radius:18px;
+
+    padding:16px;
+
+    margin-bottom:12px;
+
+    border:1px solid rgba(255,255,255,.04);
+}
+
+.quest-top{
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+}
+
+.quest-icon{
+    width:50px;
+    height:50px;
+
+    background:#252c37;
+
+    border-radius:15px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    font-size:25px;
+}
+
+.quest-info{
+    flex:1;
+}
+
+.quest-name{
+    font-weight:800;
+
+    font-size:16px;
+}
+
+.reward{
+    color:#82d62f;
+
+    font-size:13px;
+
+    margin-top:5px;
+}
+
+.check{
+    background:#2998e6;
+
+    border-radius:12px;
+
+    padding:10px 15px;
+
+    font-size:13px;
+}
+
+.check.done{
+    background:#26352a;
+
+    color:#6ce082;
+}
+
+
+/* =========================
+   INVITE
+========================= */
+
+.invite-box{
+    background:linear-gradient(145deg,#171d28,#090c12);
+
+    border:1px solid #303847;
+
+    border-radius:24px;
+
+    padding:25px 18px;
+
+    text-align:center;
+}
+
+.invite-icon{
+    font-size:70px;
+
+    margin-bottom:10px;
+}
+
+.invite-title{
+    font-size:30px;
+
+    font-weight:900;
+}
+
+.invite-text{
+    color:#a6b0bc;
+
+    line-height:1.5;
+
+    margin:10px 0 22px;
+}
+
+.ref-box{
+    display:flex;
+
+    background:#171c24;
+
+    border-radius:15px;
+
+    padding:5px;
+
+    margin-top:15px;
+}
+
+.ref-box input{
+    flex:1;
+
+    min-width:0;
+
+    border:0;
+    outline:0;
+
+    background:transparent;
+
+    color:white;
+
+    padding:12px;
+
+    font-size:12px;
+}
+
+.copy{
+    background:#2d9be8;
+
+    border-radius:11px;
+
+    padding:0 15px;
+}
+
+.invite-btn{
+    width:100%;
+
+    margin-top:15px;
+
+    background:linear-gradient(135deg,#8d45ff,#299fe9);
+
+    border-radius:15px;
+
+    padding:15px;
+
+    font-size:16px;
+}
+
+
+/* =========================
+   GIFT
+========================= */
+
+.gift{
+    background:#181e28;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    text-align:center;
+}
+
+.gift-icon{
+    font-size:100px;
+}
+
+.gift h2{
+    font-size:28px;
+}
+
+.gift p{
+    color:#9da8b5;
+}
+
+.claim{
+    background:linear-gradient(135deg,#ffc72c,#ff7a00);
+
+    padding:15px 35px;
+
+    border-radius:15px;
+
+    font-size:17px;
+}
+
+
+/* =========================
+   IMPROVE
+========================= */
+
+.upgrade{
+    background:#1b202a;
+
+    border-radius:20px;
+
+    padding:18px;
+
+    margin-bottom:12px;
+}
+
+.upgrade-row{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:10px;
+}
+
+.upgrade h3{
+    margin:0;
+}
+
+.upgrade p{
+    color:#9aa5b1;
+
+    font-size:13px;
+}
+
+.buy{
+    background:#299be7;
+
+    padding:11px 17px;
+
+    border-radius:12px;
+
+    white-space:nowrap;
+}
+
+
+/* =========================
+   NAV
+========================= */
+
+.nav{
+    position:fixed;
+
+    bottom:0;
+    left:0;
+    right:0;
+
+    height:82px;
+
+    background:rgba(13,17,24,.97);
+
+    border-top:1px solid rgba(255,255,255,.08);
+
+    display:grid;
+
+    grid-template-columns:repeat(5,1fr);
+
+    z-index:100;
+
+    padding-bottom:8px;
+}
+
+.nav button{
+    background:none;
+
+    color:#8995a4;
+
+    font-size:11px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:5px;
+}
+
+.nav button span{
+    font-size:24px;
+}
+
+.nav button.active{
+    color:white;
+}
+
+.gift-nav{
+    font-size:35px !important;
+
+    margin-top:-15px;
+}
+
+
+/* =========================
+   POPUP
+========================= */
+
+.popup{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.72);
+
+    display:none;
+
+    align-items:center;
+    justify-content:center;
+
+    z-index:500;
+
+    padding:20px;
+}
+
+.popup.show{
+    display:flex;
+}
+
+.popup-box{
+    width:100%;
+
+    max-width:380px;
+
+    background:#1a202a;
+
+    border-radius:25px;
+
+    padding:25px;
+
+    text-align:center;
+}
+
+.popup-box h2{
+    margin-top:0;
+}
+
+.close{
+    background:#303846;
+
+    padding:12px 25px;
+
+    border-radius:13px;
+
+    margin-top:15px;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="app">
+
+
+<!-- =========================
+     HOME
+========================= -->
+
+<section id="home" class="page active">
+
+    <div class="top">
+
+        <div class="profile">
+
+            <div class="avatar">
+
+                <img src="doge-logo.png"
+                     alt="Doge">
+
+            </div>
+
+            <div>
+
+                <div class="username"
+                     id="username">
+                    Player
+                </div>
+
+                <div class="level">
+                    Level 1
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button class="menu"
+                onclick="showPopup('menuPopup')">
+            ☰
+        </button>
+
+    </div>
+
+
+    <div class="profit">
+
+        <div>
+
+            <small>
+                PROFIT PER HOUR
+            </small>
+
+            <br>
+
+            <strong>
+                🪙 +0
+            </strong>
+
+        </div>
+
+        <div>
+            ⚡
+            <strong id="energySmall">
+                1000
+            </strong>
+        </div>
+
+    </div>
+
+
+    <div class="balance">
+
+        <div class="balance-title">
+            YOUR COINS
+        </div>
+
+        <div class="coins">
+
+            <span class="coin">
+                🪙
+            </span>
+
+            <span id="coins">
+                0
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="banner">
+
+        <div>
+
+            <h2>
+                DOGE EMPIRE
+            </h2>
+
+            <p>
+                BUILD • TAP • EARN • EMPIRE
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="character-area">
+
+        <div class="doge"
+             id="doge">
+
+            <div class="doge-placeholder">
+                🐕
+            </div>
+
+        </div>
+
+
+        <div class="energy">
+
+            <div class="energy-head">
+
+                <span>
+                    ⚡ Energy
+                </span>
+
+                <span>
+
+                    <b id="energy">
+                        1000
+                    </b>
+
+                    /
+                    <span id="maxEnergy">
+                        1000
+                    </span>
+
+                </span>
+
+            </div>
+
+
+            <div class="energy-bar">
+
+                <div class="energy-fill"
+                     id="energyFill">
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <button class="tap-button"
+                onclick="tapDoge()">
+
+            🪙 TAP TO EARN
+
+        </button>
+
+    </div>
+
+
+    <div class="actions">
+
+        <div class="action"
+             onclick="openPage('improve')">
+
+            <span class="emoji">
+                🚀
+            </span>
+
+            BOOST
+
+        </div>
+
+
+        <div class="action"
+             onclick="openPage('quests')">
+
+            <span class="emoji">
+                🎯
+            </span>
+
+            QUESTS
+
+        </div>
+
+
+        <div class="action"
+             onclick="openPage('gift')">
+
+            <span class="emoji">
+                🎁
+            </span>
+
+            DAILY GIFT
+
+        </div>
+
+
+        <div class="action"
+             onclick="openPage('friends')">
+
+            <span class="emoji">
+                👥
+            </span>
+
+            FRIENDS
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     IMPROVE
+========================= -->
+
+<section id="improve"
+         class="page">
+
+    <div class="page-title">
+        Improve
+    </div>
+
+    <div class="page-sub">
+        Upgrade your empire and increase your profit.
+    </div>
+
+
+    <div class="upgrade">
+
+        <div class="upgrade-row">
+
+            <div>
+
+                <h3>
+                    ⚡ Energy Capacity
+                </h3>
+
+                <p>
+                    Increase maximum energy.
+                </p>
+
+            </div>
+
+            <button class="buy"
+                    onclick="upgradeEnergy()">
+
+                🪙
+                <span id="energyPrice">
+                    100
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="upgrade">
+
+        <div class="upgrade-row">
+
+            <div>
+
+                <h3>
+                    🪙 Tap Power
+                </h3>
+
+                <p>
+                    Earn more coins per tap.
+                </p>
+
+            </div>
+
+            <button class="buy"
+                    onclick="upgradeTap()">
+
+                🪙
+                <span id="tapPrice">
+                    250
+                </span>
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     QUESTS
+========================= -->
+
+<section id="quests"
+         class="page">
+
+    <div class="page-title">
+        Quests
+    </div>
+
+    <div class="page-sub">
+        Complete tasks and collect rewards.
+    </div>
+
+
+    <div class="quest">
+
+        <div class="quest-top">
+
+            <div class="quest-icon">
+                📢
+            </div>
+
+            <div class="quest-info">
+
+                <div class="quest-name">
+                    Join our Telegram Channel
+                </div>
+
+                <div class="reward">
+                    🪙 +500
+                </div>
+
+            </div>
+
+            <button class="check"
+                    id="channelTask"
+                    onclick="doTask('channelTask','channel')">
+
+                CHECK
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="quest">
+
+        <div class="quest-top">
+
+            <div class="quest-icon">
+                📱
+            </div>
+
+            <div class="quest-info">
+
+                <div class="quest-name">
+                    Follow our Telegram
+                </div>
+
+                <div class="reward">
+                    🪙 +300
+                </div>
+
+            </div>
+
+            <button class="check"
+                    id="telegramTask"
+                    onclick="doTask('telegramTask','telegram')">
+
+                CHECK
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="quest">
+
+        <div class="quest-top">
+
+            <div class="quest-icon">
+                🎮
+            </div>
+
+            <div class="quest-info">
+
+                <div class="quest-name">
+                    Play Doge Empire
+                </div>
+
+                <div class="reward">
+                    🪙 +100
+                </div>
+
+            </div>
+
+            <button class="check"
+                    id="playTask"
+                    onclick="doTask('playTask','play')">
+
+                CHECK
+
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     FRIENDS
+========================= -->
+
+<section id="friends"
+         class="page">
+
+    <div class="page-title">
+        Invite a Friend
+    </div>
+
+    <div class="page-sub">
+        Earn rewards by inviting new friends to join Doge Empire.
+    </div>
+
+
+    <div class="invite-box">
+
+        <div class="invite-icon">
+            👥
+        </div>
+
+        <div class="invite-title">
+            INVITE A FRIEND
+        </div>
+
+        <div class="invite-text">
+
+            Share your personal referral link.
+            When your friend joins through your link,
+            you can receive rewards.
+
+        </div>
+
+
+        <div class="reward">
+            🪙 +1,000 per friend
+        </div>
+
+
+        <div class="ref-box">
+
+            <input
+                id="refLink"
+                readonly
+                value="Generating..."
+            >
+
+            <button class="copy"
+                    onclick="copyReferral()">
+
+                COPY
+
+            </button>
+
+        </div>
+
+
+        <button class="invite-btn"
+                onclick="shareReferral()">
+
+            🚀 INVITE FRIEND
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     GIFT
+========================= -->
+
+<section id="gift"
+         class="page">
+
+    <div class="page-title">
+        Daily Gift
+    </div>
+
+
+    <div class="gift">
+
+        <div class="gift-icon">
+            🎁
+        </div>
+
+        <h2>
+            Daily Reward
+        </h2>
+
+        <p>
+            Come back every day and claim your free reward.
+        </p>
+
+        <h2>
+            🪙 +500
+        </h2>
+
+        <button class="claim"
+                id="claimButton"
+                onclick="claimGift()">
+
+            CLAIM
+
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- =========================
+     NAVIGATION
+========================= -->
+
+<nav class="nav">
+
+    <button id="navHome"
+            class="active"
+            onclick="openPage('home')">
+
+        <span>
+            🏠
+        </span>
+
+        Home
+
+    </button>
+
+
+    <button id="navImprove"
+            onclick="openPage('improve')">
+
+        <span>
+            🔮
+        </span>
+
+        Improve
+
+    </button>
+
+
+    <button id="navGift"
+            onclick="openPage('gift')">
+
+        <span class="gift-nav">
+            🎁
+        </span>
+
+    </button>
+
+
+    <button id="navQuests"
+            onclick="openPage('quests')">
+
+        <span>
+            🎯
+        </span>
+
+        Quests
+
+    </button>
+
+
+    <button id="navFriends"
+            onclick="openPage('friends')">
+
+        <span>
+            👥
+        </span>
+
+        Friends
+
+    </button>
+
+</nav>
+
+</div>
+
+
+<!-- =========================
+     POPUP
+========================= -->
+
+<div class="popup"
+     id="menuPopup">
+
+    <div class="popup-box">
+
+        <h2>
+            🐕 Doge Empire
+        </h2>
+
+        <p>
+            Welcome to Doge Empire!
+        </p>
+
+        <button class="close"
+                onclick="closePopup('menuPopup')">
+
+            CLOSE
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/* =========================
+   TELEGRAM
+========================= */
+
+const tg = window.Telegram?.WebApp;
+
+if(tg){
+
+    tg.ready();
+
+    tg.expand();
+
+}
+
+
+/* =========================
+   GAME DATA
+========================= */
+
+let game;
+
+try{
+
+    game =
+        JSON.parse(
+            localStorage.getItem("dogeEmpireGame")
+        );
+
+}catch(e){
+
+    game = null;
+
+}
+
+
+if(!game){
+
+    game = {
+
+        coins:0,
+
+        energy:1000,
+
+        maxEnergy:1000,
+
+        tapPower:1,
+
+        energyPrice:100,
+
+        tapPrice:250,
+
+        tasks:{}
+
+    };
+
+}
+
+
+/* =========================
+   SAVE GAME
+========================= */
+
+function saveGame(){
+
+    localStorage.setItem(
+        "dogeEmpireGame",
+        JSON.stringify(game)
+    );
+
+}
+
+
+/* =========================
+   UPDATE UI
+========================= */
+
+function updateUI(){
+
+    document.getElementById("coins")
+        .textContent =
+        Math.floor(game.coins);
+
+
+    document.getElementById("energy")
+        .textContent =
+        game.energy;
+
+
+    document.getElementById("maxEnergy")
+        .textContent =
+        game.maxEnergy;
+
+
+    document.getElementById("energySmall")
+        .textContent =
+        game.energy;
+
+
+    document.getElementById("energyFill")
+        .style.width =
+        (
+            game.energy /
+            game.maxEnergy *
+            100
+        ) + "%";
+
+
+    document.getElementById("energyPrice")
+        .textContent =
+        game.energyPrice;
+
+
+    document.getElementById("tapPrice")
+        .textContent =
+        game.tapPrice;
+
+}
+
+
+/* =========================
+   TAP
+========================= */
+
+function tapDoge(){
+
+    if(game.energy <= 0){
+
+        alert(
+            "⚡ Not enough energy!"
+        );
+
+        return;
+
+    }
+
+
+    game.coins +=
+        game.tapPower;
+
+
+    game.energy -= 1;
+
+
+    saveGame();
+
+    updateUI();
+
+
+    const doge =
+        document.getElementById("doge");
+
+
+    doge.style.transform =
+        "scale(.94)";
+
+
+    setTimeout(()=>{
+
+        doge.style.transform =
+            "scale(1)";
+
+    },100);
+
+}
+
+
+/* =========================
+   ENERGY RECHARGE
+========================= */
+
+setInterval(()=>{
+
+    if(game.energy < game.maxEnergy){
+
+        game.energy++;
+
+        saveGame();
+
+        updateUI();
+
+    }
+
+},3000);
+
+
+/* =========================
+   PAGE SYSTEM
+========================= */
+
+function openPage(page){
+
+    document
+        .querySelectorAll(".page")
+        .forEach(p =>
+            p.classList.remove("active")
+        );
+
+
+    const selected =
+        document.getElementById(page);
+
+
+    if(selected){
+
+        selected.classList.add("active");
+
+    }
+
+
+    document
+        .querySelectorAll(".nav button")
+        .forEach(b =>
+            b.classList.remove("active")
+        );
+
+
+    const navMap = {
+
+        home:"navHome",
+
+        improve:"navImprove",
+
+        gift:"navGift",
+
+        quests:"navQuests",
+
+        friends:"navFriends"
+
+    };
+
+
+    if(navMap[page]){
+
+        document
+            .getElementById(
+                navMap[page]
+            )
+            .classList.add("active");
+
+    }
+
+}
+
+
+/* =========================
+   DAILY GIFT
+========================= */
+
+function claimGift(){
+
+    const today =
+        new Date().toDateString();
+
+
+    const last =
+        localStorage.getItem(
+            "dogeGiftDate"
+        );
+
+
+    if(last === today){
+
+        alert(
+            "🎁 You already claimed today's gift!"
+        );
+
+        return;
+
+    }
+
+
+    game.coins += 500;
+
+
+    localStorage.setItem(
+        "dogeGiftDate",
+        today
+    );
+
+
+    saveGame();
+
+    updateUI();
+
+
+    alert(
+        "🎉 You received 500 coins!"
+    );
+
+}
+
+
+/* =========================
+   ENERGY UPGRADE
+========================= */
+
+function upgradeEnergy(){
+
+    if(
+        game.coins <
+        game.energyPrice
+    ){
+
+        alert(
+            "🪙 Not enough coins!"
+        );
+
+        return;
+
+    }
+
+
+    game.coins -=
+        game.energyPrice;
+
+
+    game.maxEnergy += 100;
+
+    game.energy =
+        game.maxEnergy;
+
+
+    game.energyPrice =
+        Math.floor(
+            game.energyPrice * 1.5
+        );
+
+
+    saveGame();
+
+    updateUI();
+
+}
+
+
+/* =========================
+   TAP UPGRADE
+========================= */
+
+function upgradeTap(){
+
+    if(
+        game.coins <
+        game.tapPrice
+    ){
+
+        alert(
+            "🪙 Not enough coins!"
+        );
+
+        return;
+
+    }
+
+
+    game.coins -=
+        game.tapPrice;
+
+
+    game.tapPower++;
+
+
+    game.tapPrice =
+        Math.floor(
+            game.tapPrice * 1.7
+        );
+
+
+    saveGame();
+
+    updateUI();
+
+}
+
+
+/* =========================
+   TELEGRAM USER
+========================= */
+
+function getTelegramUser(){
+
+    if(
+        tg &&
+        tg.initDataUnsafe &&
+        tg.initDataUnsafe.user
+    ){
+
+        return tg.initDataUnsafe.user;
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================
+   REFERRAL
+========================= */
+
+function generateReferral(){
+
+    const user =
+        getTelegramUser();
+
+
+    let id;
+
+
+    if(user){
+
+        id =
+            user.id;
+
+    }else{
+
+        id =
+            localStorage.getItem(
+                "demoUserId"
+            );
+
+
+        if(!id){
+
+            id =
+                "demo_" +
+                Math.random()
+                    .toString(36)
+                    .substring(2,10);
+
+
+            localStorage.setItem(
+                "demoUserId",
+                id
+            );
+
+        }
+
+    }
+
+
+    /*
+       YOUR REAL BOT USERNAME
+    */
+
+    const botUsername =
+        "DogeEmpir_99_bot";
+
+
+    /*
+       CORRECT REFERRAL LINK
+    */
+
+    const link =
+        "https://t.me/" +
+        botUsername +
+        "?start=ref_" +
+        encodeURIComponent(id);
+
+
+    document.getElementById(
+        "refLink"
+    ).value = link;
+
+}
+
+
+/* =========================
+   COPY REFERRAL
+========================= */
+
+async function copyReferral(){
+
+    const input =
+        document.getElementById(
+            "refLink"
+        );
+
+
+    try{
+
+        await navigator.clipboard.writeText(
+            input.value
+        );
+
+
+        alert(
+            "✅ Referral link copied!"
+        );
+
+
+    }catch(e){
+
+        input.select();
+
+        document.execCommand("copy");
+
+
+        alert(
+            "✅ Referral link copied!"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   SHARE REFERRAL
+========================= */
+
+function shareReferral(){
+
+    const link =
+        document.getElementById(
+            "refLink"
+        ).value;
+
+
+    const text =
+        "🐕 Join me in Doge Empire and earn coins!";
+
+
+    const shareUrl =
+        "https://t.me/share/url?url=" +
+        encodeURIComponent(link) +
+        "&text=" +
+        encodeURIComponent(text);
+
+
+    if(
+        tg &&
+        tg.openTelegramLink
+    ){
+
+        tg.openTelegramLink(
+            shareUrl
+        );
+
+    }else{
+
+        window.open(
+            shareUrl,
+            "_blank"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   TASKS
+========================= */
+
+function doTask(
+    buttonId,
+    type
+){
+
+    if(game.tasks[type]){
+
+        alert(
+            "✅ This task is already completed."
+        );
+
+        return;
+
+    }
+
+
+    let reward = 0;
+
+
+    if(type === "channel"){
+
+        reward = 500;
+
+    }
+
+
+    if(type === "telegram"){
+
+        reward = 300;
+
+    }
+
+
+    if(type === "play"){
+
+        reward = 100;
+
+    }
+
+
+    /*
+       Open your channel
+    */
+
+    if(type === "channel"){
+
+        const channelUrl =
+            "https://t.me/DogeEmpireOfficial";
+
+
+        if(
+            tg &&
+            tg.openTelegramLink
+        ){
+
+            tg.openTelegramLink(
+                channelUrl
+            );
+
+        }else{
+
+            window.open(
+                channelUrl,
+                "_blank"
+            );
+
+        }
+
+    }
+
+
+    /*
+       TEMPORARY TASK SYSTEM
+
+       IMPORTANT:
+       This currently rewards the user
+       immediately.
+
+       Real Telegram membership
+       verification requires a backend
+       and Bot API.
+    */
+
+
+    game.coins += reward;
+
+    game.tasks[type] = true;
+
+
+    const button =
+        document.getElementById(
+            buttonId
+        );
+
+
+    if(button){
+
+        button.textContent =
+            "✓ DONE";
+
+
+        button.classList.add(
+            "done"
+        );
+
+
+        button.disabled = true;
+
+    }
+
+
+    saveGame();
+
+    updateUI();
+
+
+    alert(
+        "🎉 Task completed! +" +
+        reward +
+        " coins"
+    );
+
+}
+
+
+/* =========================
+   POPUP
+========================= */
+
+function showPopup(id){
+
+    const popup =
+        document.getElementById(id);
+
+
+    if(popup){
+
+        popup.classList.add(
+            "show"
+        );
+
+    }
+
+}
+
+
+function closePopup(id){
+
+    const popup =
+        document.getElementById(id);
+
+
+    if(popup){
+
+        popup.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+/* =========================
+   LOAD TASK STATUS
+========================= */
+
+function loadTasks(){
+
+    const map = {
+
+        channel:"channelTask",
+
+        telegram:"telegramTask",
+
+        play:"playTask"
+
+    };
+
+
+    Object.keys(game.tasks)
+        .forEach(type=>{
+
+            if(!game.tasks[type])
+                return;
+
+
+            const button =
+                document.getElementById(
+                    map[type]
+                );
+
+
+            if(button){
+
+                button.textContent =
+                    "✓ DONE";
+
+
+                button.classList.add(
+                    "done"
+                );
+
+
+                button.disabled = true;
+
+            }
+
+        });
+
+}
+
+
+/* =========================
+   LOAD USER
+========================= */
+
+function loadUser(){
+
+    const user =
+        getTelegramUser();
+
+
+    if(user){
+
+        document.getElementById(
+            "username"
+        ).textContent =
+            user.first_name ||
+            user.username ||
+            "Player";
+
+    }
+
+}
+
+
+/* =========================
+   START GAME
+========================= */
+
+loadUser();
+
+generateReferral();
+
+loadTasks();
+
+updateUI();
+
+</script>
+
+</body>
+</html>
